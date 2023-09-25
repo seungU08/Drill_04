@@ -7,7 +7,7 @@ character = load_image('character_sheet.png')
 
 def handle_events():
     global running
-    global dir
+    global dirx , diry
     global i
 
     events = get_events()
@@ -19,15 +19,28 @@ def handle_events():
                 running = False
             elif event.key == SDLK_LEFT:
                 i = 1
-                dir -= 1
+                dirx -= 1
             elif event.key == SDLK_RIGHT:
                 i = 2
-                dir += 1
+                dirx += 1
+
+            elif event.key == SDLK_UP:
+                i = 0
+                diry += 1
+            elif event.key == SDLK_DOWN:
+                i = 3
+                diry -= 1
+
         elif event.type == SDL_KEYUP:
             if event.key == SDLK_LEFT:
-                dir += 1
+                dirx += 1
             elif event.key == SDLK_RIGHT:
-                dir -= 1
+                dirx -= 1
+
+            elif event.key == SDLK_UP:
+                diry -= 1
+            elif event.key == SDLK_DOWN:
+                diry += 1
 
 
 
@@ -37,7 +50,7 @@ running = True
 x , y = TUK_WIDTH//2 , TUK_HEIGHT//2
 frame = 0
 i = 3
-dir = 0
+dirx , diry = 0 , 0
 while running:
     clear_canvas()
     tuk_ground.draw(TUK_WIDTH//2 , TUK_HEIGHT//2)
@@ -47,7 +60,8 @@ while running:
     handle_events()
 
     frame = (frame + 1)%4
-    x += dir * 5
+    x += dirx * 5
+    y += diry * 5
     delay(0.05)
 
 close_canvas()
